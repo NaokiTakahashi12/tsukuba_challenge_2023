@@ -22,36 +22,41 @@
 
 import os
 
-import yaml
 from ament_index_python.packages import get_package_share_directory
 import launch
-import launch_ros
 
 
 def generate_launch_description():
-    this_pkg_share_dir = get_package_share_directory('tc23_bringup')
-    this_pkg_include_launch_dir = os.path.join(
-        this_pkg_share_dir,
-        'launch',
-        'includes'
-    )
     return launch.LaunchDescription([
         launch.actions.GroupAction([
             launch.actions.IncludeLaunchDescription(
                 launch.launch_description_sources.AnyLaunchDescriptionSource(
                     os.path.join(
-                        this_pkg_include_launch_dir,
-                        'd455.launch.py'
+                        get_package_share_directory('realsense2_camera'),
+                        'launch',
+                        'rs_launch.py'
                     )
-                )
-            ),
-            launch.actions.IncludeLaunchDescription(
-                launch.launch_description_sources.AnyLaunchDescriptionSource(
-                    os.path.join(
-                        this_pkg_include_launch_dir,
-                        'vlp32c.launch.py'
-                    )
-                )
-            ),
+                ),
+                launch_arguments={
+                    'camera_name': 'd455',
+                    'enable_depth': 'true',
+                    'enable_infra': 'true',
+                    'enable_infra1': 'true',
+                    'enable_infra2': 'true',
+                    'depth_module.exposure': '8500',
+                    'depth_module.gain': '16',
+                    'depth_module.hdr_enabled': 'false',
+                    'enable_sync': 'true',
+                    'enable_rgbd': 'true',
+                    'enable_gyro': 'true',
+                    'enable_accel': 'true',
+                    'unite_imu_method': '1',
+                    'align_depth.enable': 'true',
+                    'decimation_filter.enable': 'true',
+                    'spatial_filter.enable': 'true',
+                    'temporal_filter.enable': 'true',
+                    'hdr_merge.enable': 'false'
+                }.items()
+            )
         ])
     ])
