@@ -64,6 +64,10 @@ def generate_launch_description():
                 'enable_stf',
                 default_value='true'
             ),
+            launch.actions.DeclareLaunchArgument(
+                'with_rviz',
+                default_value='true'
+            ),
             launch_ros.actions.Node(
                 package='scanmatcher',
                 executable='scanmatcher_node',
